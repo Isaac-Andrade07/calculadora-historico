@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora científica com histórico separado por usuário">
+  <title>Calculadora com Histórico</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%237c3aed%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-size=%2218%22 font-family=%22sans-serif%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22%3E=%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    try { document.documentElement.dataset.tema = localStorage.getItem("calc-tema") || "escuro"; } catch {}
+  </script>
+</head>
+<body>
+  <header class="topo">
+    <h1>Calculadora <span>com histórico</span></h1>
+    <div class="usuario">
+      <label for="seletorUsuario">Usuário</label>
+      <select id="seletorUsuario"></select>
+      <button class="btn-sec" id="btnNovoUsuario" title="Adicionar usuário">+ Novo</button>
+      <button class="btn-sec icone" id="btnTema" aria-label="Alternar tema">☀️</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- CALCULADORA -->
+    <section class="calculadora" aria-label="Calculadora">
+      <div class="visor">
+        <input id="entrada" class="entrada" autocomplete="off" spellcheck="false" aria-label="Expressão" placeholder="0">
+        <output id="previa" class="previa" aria-live="polite"></output>
+      </div>
+
+      <div class="modo">
+        <button id="btnModo" class="btn-sec mini" aria-pressed="false">Modo científico</button>
+        <span class="dica">Use também o teclado</span>
+      </div>
+
+      <div class="teclas cientificas" id="teclasCientificas" hidden>
+        <button data-tecla="(">(</button>
+        <button data-tecla=")">)</button>
+        <button data-tecla="√">√</button>
+        <button data-tecla="^">xʸ</button>
+        <button data-tecla="^2">x²</button>
+      </div>
+
+      <div class="teclas" id="teclado">
+        <button data-acao="limpar" class="funcao">C</button>
+        <button data-acao="apagar" class="funcao" aria-label="Apagar">⌫</button>
+        <button data-tecla="%" class="funcao">%</button>
+        <button data-tecla="÷" class="operador">÷</button>
+
+        <button data-tecla="7">7</button>
+        <button data-tecla="8">8</button>
+        <button data-tecla="9">9</button>
+        <button data-tecla="×" class="operador">×</button>
+
+        <button data-tecla="4">4</button>
+        <button data-tecla="5">5</button>
+        <button data-tecla="6">6</button>
+        <button data-tecla="-" class="operador">−</button>
+
+        <button data-tecla="1">1</button>
+        <button data-tecla="2">2</button>
+        <button data-tecla="3">3</button>
+        <button data-tecla="+" class="operador">+</button>
+
+        <button data-acao="sinal" class="funcao" aria-label="Inverter sinal">±</button>
+        <button data-tecla="0">0</button>
+        <button data-tecla=",">,</button>
+        <button data-acao="igual" class="igual">=</button>
+      </div>
+    </section>
+
+    <!-- HISTÓRICO -->
+    <section class="historico" aria-label="Histórico">
+      <div class="cab-historico">
+        <h2>Histórico de <span id="nomeUsuario"></span></h2>
+        <div class="acoes">
+          <button class="btn-sec mini" id="btnExportar">Exportar CSV</button>
+          <button class="btn-sec mini perigo" id="btnLimpar">Limpar</button>
+        </div>
+      </div>
+
+      <div class="estatisticas" id="estatisticas"></div>
+
+      <input type="search" id="busca" placeholder="Buscar no histórico">
+      <ul class="lista" id="lista"></ul>
+      <p class="vazio" id="vazio">Nenhum cálculo ainda. Faça uma conta e aperte <b>=</b>.</p>
+
+      <button class="link" id="btnRemoverUsuario">Remover este usuário</button>
+    </section>
+  </main>
+
+  <!-- Modal para novo usuário -->
+  <dialog id="modalUsuario">
+    <form method="dialog" id="formUsuario">
+      <h2>Novo usuário</h2>
+      <p class="dica">Cada usuário tem o próprio histórico de cálculos.</p>
+      <input name="nome" maxlength="30" placeholder="Seu nome" required>
+      <p class="erro" id="erroUsuario"></p>
+      <div class="botoes">
+        <button type="button" class="btn-sec" value="cancelar" id="btnCancelarUsuario">Cancelar</button>
+        <button type="submit" class="btn">Entrar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <footer class="rodape">Feito por Isaac Raphael · HTML, CSS e JavaScript</footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
