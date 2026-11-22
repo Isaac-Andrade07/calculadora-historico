@@ -1,0 +1,10 @@
+{
+  "name": "calculadora-historico",
+  "version": "1.0.0",
+  "description": "Calculadora científica com histórico separado por usuário",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "author": "Isaac Raphael Oliveira Andrade"
+}
